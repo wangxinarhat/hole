@@ -47,15 +47,12 @@ function timeline(praiseCount) {
         // 打开点赞窗口，找到点赞评论入口，点击，找不到，向下滑。
         let praisePopSelector = id("com.tencent.mm:id/ng").desc("评论").clz("android.widget.ImageView");
         let praisePopNode = praisePopSelector.getOneNodeInfo(1000);
-        logd("pop入口 praisePopNode : " + praisePopNode);
-        //找不到pop入口
-        if (!praisePopNode) {
-            loge("找不到pop入口，上滑 ！！！ ");
-            swipeAndSleep();
-            continue;
-        }
-        //如果pop入口，Y轴坐标太小、太大则跳过，否则会误触拍照icon
-        if (praisePopNode.bounds.top > SCREEN_HEIGHT / 6 && praisePopNode.bounds.bottom < SCREEN_HEIGHT / 6 * 5) {
+
+        //找不到pop入口，Y轴坐标太小、太大则滑动1/6屏幕，跳过
+        if (!praisePopNode || praisePopNode.bounds.top < SCREEN_HEIGHT / 6 || praisePopNode.bounds.bottom > SCREEN_HEIGHT / 6 * 5) {
+            logi("找不到pop入口，Y轴坐标太小、太大则滑动 1/8 屏幕，跳过 ！！！ ");
+            swipeAndSleep(SCREEN_HEIGHT / 8);
+        } else {
             // 打开点赞、评论pop。
             praisePopNode.click();
             sleep(1000);
@@ -69,9 +66,9 @@ function timeline(praiseCount) {
                     break;
                 }
             }
-            logi("申请截图权限，结果：" + request);
             if (!request) {
-                loge("尝试3次，截图权限获取失败，滑动后重试！！！");
+                logw("尝试3次，申请截图权限失败，滑动 1/8 屏幕，跳过 ！！！ ");
+                swipeAndSleep(SCREEN_HEIGHT / 8);
                 continue;
             }
             sleep(1000);
@@ -85,34 +82,37 @@ function timeline(praiseCount) {
                 }
             }
             if (tmpImage == null) {
-                loge("尝试3次，截图失败，滑动后重试！！！");
-                continue;
+                logw("尝试3次，截图失败，滑动 1/8 屏幕，跳过 ！！！ ");
+                swipeAndSleep(SCREEN_HEIGHT / 8);
             } else {
                 let firstColor = "#4C4C4C-#101010";
                 let multiColor = "-42|-36|#DDDDDD-#101010,-99|-47|#4C4C4C-#101010,-114|-56|#4C4C4C-#101010,-114|2|#4C4C4C-#101010,-46|-29|#AAAAAA-#101010,-36|5|#4C4C4C-#101010,-5|1|#4C4C4C-#101010,-52|-9|#4C4C4C-#101010,-8|3|#4C4C4C-#101010,-49|-5|#4D4D4D-#101010,-81|-46|#4C4C4C-#101010,-24|0|#4C4C4C-#101010,-13|-40|#4C4C4C-#101010,-119|-22|#4C4C4C-#101010,-124|-5|#4C4C4C-#101010,-25|-33|#FFFFFF-#101010,-123|0|#4C4C4C-#101010,-49|-26|#4C4C4C-#101010,-15|-20|#4C4C4C-#101010,-83|19|#4C4C4C-#101010,-88|-1|#A6A6A6-#101010,-58|-1|#4C4C4C-#101010,-2|-43|#4C4C4C-#101010,-34|-36|#ABABAB-#101010,-14|-24|#4C4C4C-#101010,-72|-45|#4C4C4C-#101010,-24|-2|#4C4C4C-#101010,-75|-57|#4C4C4C-#101010,-53|-28|#4C4C4C-#101010";
                 let points = image.findMultiColor(tmpImage, firstColor, multiColor, 0.9, 0, 0, 0, 0, 1, 1);
                 //这玩意是个数组
-                logd("points " + points);
                 if (points && points.length > 0) {
                     logd("points " + JSON.stringify(points));
                     clickPoint(points[0].x, points[0].y);
                     count++;
-                    logd("点赞成功，当前进度 ： " + count + " / " + praiseCount);
+                    logd("点赞成功，进度 ： " + count + " / " + praiseCount);
                     sleep(2000);
+                    swipeAndSleep(SCREEN_HEIGHT / 4);
                 } else {
-                    loge("点赞找色失败 points = " + points);
+                    logi("找色失败，滑动 1/8 屏幕");
+                    swipeAndSleep(SCREEN_HEIGHT / 8);
                 }
                 //图片要回收
                 image.recycle(tmpImage);
             }
         }
-        logi("点赞结束，上滑 ！！！");
-        swipeAndSleep();
+        sleep(2000);
     }
 }
 
-function swipeAndSleep() {
-    swipeToPoint(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 * 3, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 500);
+function swipeAndSleep(diff) {
+    if (diff <= 0 || diff > SCREEN_HEIGHT / 4) {
+        diff = SCREEN_HEIGHT / 4;
+    }
+    swipeToPoint(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 * 3, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 * 3 - diff, 500);
     sleep(2000);
 }
 
