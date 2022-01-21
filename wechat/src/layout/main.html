@@ -9,21 +9,11 @@
 
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <title>H5 网页示例</title>
+    <title>black hole</title>
 </head>
 <body style="margin-left: 10px;margin-right: 10px">
 
-<div class="card-panel">
-    <div class="row s20 ">
-        <div class="input-field  inline col s4">
-            <input id="praise_count" type="number" class="validate">
-            <label for="praise_count">点赞个数</label>
-        </div>
-    </div>
-</div>
-
-
-<div class="row">
+<div class="row" style="margin-top: 10px;display: flex;justify-content: space-around | center">
 
     <div class="col s6">
         <button class="btn waves-effect waves-light " type="button" name="action" onclick="javascript:save()">保存参数
@@ -33,6 +23,44 @@
         <button class="btn waves-effect waves-light" type="button" name="action" onclick="javascript:window.ec.start()">
             启动脚本
         </button>
+    </div>
+</div>
+
+
+<form class="card-panel" style="display: flex;justify-content: space-around">
+    <p>
+        <label>
+            <input name="radio" class="with-gap" type="radio" checked="checked" />
+            <span>赞美</span>
+        </label>
+    </p>
+    <p>
+        <label>
+            <input name="radio" class="with-gap" type="radio"/>
+            <span>消息</span>
+        </label>
+    </p>
+</form>
+
+<div class="card-panel">
+    <div class="row">
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="textarea1" class="materialize-textarea"></textarea>
+                    <label for="textarea1">文案内容</label>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card-panel">
+    <div class="row s20 ">
+        <div class="input-field  inline col s4">
+            <input id="praise_count" type="number" class="validate">
+            <label for="praise_count">点赞个数</label>
+        </div>
     </div>
 </div>
 
@@ -60,6 +88,8 @@
         window.ec.saveConfig("praise_count", praise_count);
         window.ec.toast("保存成功");
     }
+
+   
 
 </script>
 
