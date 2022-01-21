@@ -1,4 +1,10 @@
-function autoServiceStart(time) {
+function CommonUtilsWrapper() {
+
+}
+
+var commonUtils = new CommonUtilsWrapper();
+
+CommonUtilsWrapper.prototype.autoServiceStart = function (time) {
     for (let i = 0; i < time; i++) {
         if (isServiceOk()) {
             return true;

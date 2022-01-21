@@ -2,7 +2,7 @@ const SCREEN_WIDTH = device.getScreenWidth();
 const SCREEN_HEIGHT = device.getScreenHeight();
 
 function main() {
-    if (!autoServiceStart(3)) {
+    if (!commonUtils.autoServiceStart(3)) {
         logd("自动化服务启动失败，无法执行脚本")
         exit();
         return;
