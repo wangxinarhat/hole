@@ -13,33 +13,24 @@
 </head>
 <body style="margin-left: 10px;margin-right: 10px">
 
-<div class="row" style="margin-top: 10px;display: flex;justify-content: space-around | center">
-
-    <div class="col s6">
-        <button class="btn waves-effect waves-light " type="button" name="action" onclick="javascript:save()">保存参数
-        </button>
-    </div>
-    <div class="col s6">
-        <button class="btn waves-effect waves-light" type="button" name="action" onclick="javascript:window.ec.start()">
-            启动脚本
-        </button>
-    </div>
-</div>
-
-
 <form class="card-panel" style="display: flex;justify-content: space-around">
     <p>
         <label>
-            <input name="radio" class="with-gap" type="radio" checked="checked" />
+            <input name="radio" class="with-gap" type="radio" checked id="praise_timeline"/>
             <span>赞美</span>
         </label>
     </p>
     <p>
         <label>
-            <input name="radio" class="with-gap" type="radio"/>
+            <input name="radio" class="with-gap" type="radio" id="bless_message"/>
             <span>消息</span>
         </label>
     </p>
+    <div class="col s6">
+        <button class="btn waves-effect waves-light" type="button" name="action" onclick="startApplication()">
+            启动脚本
+        </button>
+    </div>
 </form>
 
 <div class="card-panel">
@@ -47,8 +38,11 @@
         <form class="col s12">
             <div class="row">
                 <div class="input-field col s12">
-                    <textarea id="textarea1" class="materialize-textarea"></textarea>
-                    <label for="textarea1">文案内容</label>
+                    <textarea id="message_content" class="materialize-textarea">测试...
+                    测试1
+                    测试2
+                    </textarea>
+                    <label for="message_content">文案内容</label>
                 </div>
             </div>
         </form>
@@ -58,7 +52,7 @@
 <div class="card-panel">
     <div class="row s20 ">
         <div class="input-field  inline col s4">
-            <input id="praise_count" type="number" class="validate">
+            <input id="praise_count" type="number" class="validate" content="测试...">
             <label for="praise_count">点赞个数</label>
         </div>
     </div>
@@ -80,16 +74,27 @@
         var praise_count = window.ec.getConfig("praise_count");
         $("#praise_count").val(praise_count);
 
+        var praiseTimeline = window.ec.getConfig("praise_timeline");
+        if (praiseTimeline === "true") {
+            $("#praiseTimeline").attr("checked", "checked");
+        }
+        var blessMessage = window.ec.getConfig("bless_message");
+        if (blessMessage === "true") {
+            $("#blessMessage").attr("checked", "checked");
+        }
+
     });
 
-    //保存参数的函数
-    function save() {
-        var praise_count = $("#praise_count").val();
-        window.ec.saveConfig("praise_count", praise_count);
-        window.ec.toast("保存成功");
-    }
+    function startApplication() {
+        //保存参数
+        var praiseCount = $("#praise_count").val();
+        window.ec.saveConfig("praise_count", praiseCount);
+        window.ec.saveConfig("praise_timeline", $("#praise_timeline").prop("checked"));
+        window.ec.saveConfig("bless_message", $("#bless_message").prop("checked"));
+        window.ec.saveConfig("message_content", $("#message_content").val());
 
-   
+        window.ec.start()
+    }
 
 </script>
 

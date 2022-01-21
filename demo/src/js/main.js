@@ -31,6 +31,7 @@ function main() {
     logd("是不是一年级: " + readConfigString("one"));
     logd("备注: " + readConfigString("mark"));
     logd("jobTaskTag..." + readConfigString("jobTaskTag"));
+
     //如果自动化服务正常
     if (!autoServiceStart(3)) {
         logd("自动化服务启动失败，无法执行脚本")

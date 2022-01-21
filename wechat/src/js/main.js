@@ -7,6 +7,13 @@ function main() {
         exit();
         return;
     }
+
+
+    logd("praise : " + readConfigString("praise_timeline"));
+    logd("message : " + readConfigString("bless_message"));
+    logd("content: " + readConfigString("message_content"));
+
+
     logd("开始执行脚本------>")
     utils.openAppByName("微信");
     sleep(5000);
