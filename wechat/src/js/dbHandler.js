@@ -28,8 +28,9 @@ function isNeedMessage(nickname, message) {
         logd("时间差 = " + timeDiff + " 天");
 
         // || queryRet[0]["last_message"] === message
-        if (timeDiff < 15) {
-            isNeed = false;
+        if (false || timeDiff < 15) {
+            // todo test
+            isNeed = true;
         } else {
             isNeed = true;
         }
@@ -47,20 +48,28 @@ function isNeedMessage(nickname, message) {
  * @param content
  */
 function record(nickname, content) {
-    logd("record nickname ：" + nickname);
-
-    let sql = "select * from " + "opt_log" + "where nickname = " + nickname;
+    let sql = "select * from ".concat("opt_log").concat(" where nickname = ").concat('\"').concat(nickname).concat('\";');
     let queryRet = sqlite.query(sql);
-    logd("record queryRet ：" + queryRet + ", type = " + typeof queryRet);
-    logd("record queryRet ：" + JSON.stringify(queryRet));
+    logd("record : sql =" + sql);
+    logd("record ：queryRet = " + JSON.stringify(queryRet));
 
-    if (queryRet) {
-        logd("record queryRet ：更新数据 ～");
-        // let updateRet = sqlite.update("opt_log", data, "nickname = " + nickname);
+    if (queryRet && Object(queryRet).length > 0) {
+        logd("record ：更新数据 ～");
+        let times = parseInt(queryRet[0]["times"]) + 1;
+        logd("record ：给 " + nickname + " 第 " + times + " 次，发祝福消息了～");
+        let dataMap = {
+            "nickname": nickname,
+            "times": times,
+            "update_time": Date.parse(new Date()),
+            "last_message": content
+        }
+        logd("record ：dataMap = " + JSON.stringify(dataMap));
+        let updateRet = sqlite.update("opt_log", dataMap, "nickname = " + nickname);
+        logd("record ：更新结果 = " + updateRet);
     } else {
         let times = 1
         let curTimestamp = Date.parse(new Date());
-        logd("record queryRet ：插入数据 ～");
+        logd("record ：插入数据 ～");
         let sql = "INSERT INTO \"opt_log\" (\"nickname\", \"times\", \"update_time\", \"last_message\") VALUES(".concat('\"').concat(nickname).concat('\"').concat(",").concat(times).concat(",").concat(curTimestamp).concat(",").concat('\"').concat(content).concat('\"').concat(");");
         logd("record sql ：" + sql);
         let insertRet = sqlite.execSql(sql);
