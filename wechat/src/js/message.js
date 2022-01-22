@@ -24,7 +24,11 @@ function send(content, count) {
         tabNode.click();
         sleep(2000);
     }
-    // 点赞
+
+    //连接数据库
+    connect();
+
+    // 发消息
     let curCount = 0;
     while (curCount < count) {
         // 找聊天窗口列表，找不到滑动。
@@ -36,36 +40,44 @@ function send(content, count) {
             swipeAndSleep(SCREEN_HEIGHT / 8);
         } else {
             for (let i = 0; i < friendNodes.length; i++) {
-                logd(friendNodes[i].text);
-                friendNodes[i].click();
-                sleep(3000);
-
                 //todo 查看是否群聊，如果是，back
+                logd(friendNodes[i].text);
+                if (!isNeedMessage(friendNodes[i].text)) {
+                    logd(friendNodes[i].text + " 不需要发祝福消息，去看下一个朋友是否需要");
+                    continue;
+                } else {
+                    friendNodes[i].click();
+                    sleep(3000);
 
-                let inputSelector = id("com.tencent.mm:id/b4a").clz("android.widget.EditText");
-                let inputNode = inputSelector.getOneNodeInfo(1000);
-                if (inputNode) {
-                    inputNode.clearText();
-                    sleep(500);
-                    // inputNode.imeInputText(content);
-                    inputNode.imeInputText(randomPoem());
-                    sleep(2000);
-                    let sendSelector = id("com.tencent.mm:id/b8k").clz("android.widget.Button");
-                    let sendNode = sendSelector.getOneNodeInfo(1000);
-                    if (sendNode) {
-                        sendNode.click();
-                        curCount++;
-                        logi("进度：" + curCount + " / " + count + " ; 给 " + friendNodes[i].text + " 发送祝福消息成功～");
+                    let inputSelector = id("com.tencent.mm:id/b4a").clz("android.widget.EditText");
+                    let inputNode = inputSelector.getOneNodeInfo(1000);
+                    if (inputNode) {
+                        inputNode.clearText();
+                        sleep(500);
+                        // inputNode.imeInputText(content);
+                        let poem = randomPoem();
+                        inputNode.imeInputText(poem);
                         sleep(2000);
-                        back();
+                        let sendSelector = id("com.tencent.mm:id/b8k").clz("android.widget.Button");
+                        let sendNode = sendSelector.getOneNodeInfo(1000);
+                        if (sendNode) {
+                            sendNode.click();
+                            curCount++;
+                            logi("进度：" + curCount + " / " + count + " ; 给 " + friendNodes[i].text + " 发送祝福消息成功～");
+                            record(friendNodes[i].text, poem);
+
+                            // sleep(2000);
+                            back();
+                        } else {
+                            loge("找不到发送按钮～");
+                            back();
+                        }
                     } else {
-                        loge("找不到发送按钮～");
+                        loge("找不到输入框～");
                         back();
                     }
-                } else {
-                    loge("找不到输入框～");
-                    back();
                 }
+
                 sleep(3000);
             }
 

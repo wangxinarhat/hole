@@ -1,12 +1,14 @@
-let tmpImage = image.captureFullScreen();
-if (tmpImage != null) {
-    let firstColor = "#4C4C4C-#101010";
-    let multiColor = "-61|-29|#4C4C4C-#101010,-83|-47|#4C4C4C-#101010,-86|-18|#CECECE-#101010,-10|-44|#4C4C4C-#101010,-18|-30|#FFFFFF-#101010,-57|2|#4C4C4C-#101010,-56|-17|#FFFFFF-#101010,0|-43|#4C4C4C-#101010,-66|-2|#A6A6A6-#101010,-21|-28|#FFFFFF-#101010,-7|-29|#FFFFFF-#101010,-51|0|#4C4C4C-#101010,-10|-39|#4C4C4C-#101010,2|-8|#4C4C4C-#101010,-23|-30|#FFFFFF-#101010,-75|-23|#4C4C4C-#101010,-20|-33|#4C4C4C-#101010,-78|-31|#4C4C4C-#101010,-86|-7|#4C4C4C-#101010,-22|-4|#828282-#101010,-12|-13|#4C4C4C-#101010,-73|2|#4C4C4C-#101010,-50|-2|#4C4C4C-#101010,-21|-4|#4C4C4C-#101010,2|-46|#4C4C4C-#101010,-42|2|#4C4C4C-#101010,-51|-26|#FFFFFF-#101010,-45|-23|#4C4C4C-#101010,-30|-18|#4C4C4C-#101010";
-    let points = image.findMultiColor(tmpImage, firstColor, multiColor, 0.9, 0, 0, 0, 0, 1, 1);
-    //这玩意是个数组
-    if (points) {
-        logd("points " + JSON.stringify(points));
-    }
-    //图片要回收
-    image.recycle(tmpImage)
-}
+CREATE TABLE IF NOT EXISTS "opt_log" (
+	"nickname"	TEXT NOT NULL,
+	"times"	INTEGER,
+	"update_time"	INTEGER,
+	"last_message"	TEXT NOT NULL,
+	PRIMARY KEY("nickname")
+);
+
+INSERT INTO "main"."opt_log" ("nickname", "times", "update_time", "last_message") VALUES ('kaka', '2', '1642841262092', '白日依山尽，黄河入海流。
+欲穷千里目，更上一层楼。');
+INSERT INTO "opt_log" ("nickname", "times", "update_time", "last_message") VALUES('kaka', '2', '1642841262092', '白日依山尽，黄河入海流。欲穷千里目，更上一层楼。');
+
+INSERT INTO "main"."opt_log" ("nickname", "times", "update_time", "last_message") VALUES("lonely.", 1, 1642847627000,"前不见古人，后不见来者。
+念天地之悠悠，独怆然而涕下！");
