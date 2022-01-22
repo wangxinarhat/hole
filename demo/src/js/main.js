@@ -29,6 +29,13 @@ function main() {
 
     let sql = "select * from ".concat("opt_log").concat(" where nickname = ").concat('\"').concat(nickname).concat('\";');
 
+    parseInt(queryRet[0]["update_time"])
+
+
+    logd("时间差 = " + (Date.parse(new Date()) - parseInt("1642853324000")) / (60 * 1000) + " 分钟");
+    logd("时间差 = " + (Date.parse(new Date()) - 1642853324000) / (60 * 1000) + " 分钟");
+    logd("时间差 = " + (Date.parse(new Date()) - 1642853324000) / (24 * 40 * 60 * 1000) + " tian");
+
     logi(sql);
     //开始再这里编写代码了！！
     // toast("Hello World");

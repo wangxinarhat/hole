@@ -16,19 +16,23 @@ function connect() {
     logd("connect create table result ：" + createTable);
 }
 
-function isNeedMessage(nickname) {
-    logd("isNeedMessage : nickname = " + nickname);
+function isNeedMessage(nickname, message) {
     let isNeed = false;
     let sql = "select * from ".concat("opt_log").concat(" where nickname = ").concat('\"').concat(nickname).concat('\";');
     logd("isNeedMessage : sql = " + sql);
-
     let queryRet = sqlite.query(sql);
-    logd("isNeedMessage queryRet type ：" + typeof queryRet);
     logd("isNeedMessage queryRet ：" + JSON.stringify(queryRet));
-    if (queryRet) {
-        let curTimestamp = Date.parse(new Date());
-        logd("isNeedMessage : curTimestamp type = " + typeof curTimestamp);
-        logd("isNeedMessage : curTimestamp = " + curTimestamp);
+
+    if (queryRet && Object(queryRet).length > 0) {
+        let timeDiff = (Date.parse(new Date()) - parseInt(queryRet[0]["update_time"])) / (24 * 60 * 60 * 1000);
+        logd("时间差 = " + timeDiff + " 天");
+
+        // || queryRet[0]["last_message"] === message
+        if (timeDiff < 15) {
+            isNeed = false;
+        } else {
+            isNeed = true;
+        }
     } else {
         isNeed = true;
         logd("isNeedMessage  ： 没查到记录，发消息吧～");
