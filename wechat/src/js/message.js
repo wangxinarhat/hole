@@ -4,7 +4,7 @@ function send(content, count) {
         return
     }
     if (count < 20) {
-        // count = 20;
+        count = 20;
     }
 
     let result = agentEvent.setCurrentIme();
@@ -49,8 +49,7 @@ function send(content, count) {
                     continue;
                 } else {
                     friendNodes[i].click();
-                    sleep(3000);
-
+                    sleep(2000);
                     let inputSelector = id("com.tencent.mm:id/b4a").clz("android.widget.EditText");
                     let inputNode = inputSelector.getOneNodeInfo(1000);
                     if (inputNode) {
@@ -68,7 +67,7 @@ function send(content, count) {
                             logi("进度：" + curCount + " / " + count + " ; 给 " + friendNodes[i].text + " 发送祝福消息成功～");
                             record(friendNodes[i].text, poem);
 
-                            // sleep(2000);
+                            sleep(2000);
                             back();
                         } else {
                             loge("找不到发送按钮～");
@@ -79,10 +78,8 @@ function send(content, count) {
                         back();
                     }
                 }
-
                 sleep(3000);
             }
-
             // 滑动3/4屏幕
             swipeAndSleep(SCREEN_HEIGHT / 4 * 3);
         }

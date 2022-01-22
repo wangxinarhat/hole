@@ -1,5 +1,3 @@
-const AES_PSD = "black_hole";
-const OPT_LOG = "opt_log";
 const DATABASE_NAME = "hole.db";
 const CREATE_TABLE_SQL = "CREATE TABLE IF NOT EXISTS \"opt_log\" (\n" +
     "\t\"nickname\"\tTEXT NOT NULL,\n" +

@@ -50,7 +50,7 @@ function main() {
     }
 
     logd("脚本执行完毕------>");
-    // exit();
+    exit();
 }
 
 main();

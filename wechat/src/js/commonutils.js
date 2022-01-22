@@ -19,7 +19,7 @@ CommonUtilsWrapper.prototype.autoServiceStart = function (time) {
 }
 
 function randomPoem() {
-    return MSG_ARRAY[randomNum(0, MSG_ARRAY.length)];
+    return MSG_ARRAY[randomNum(0, MSG_ARRAY.length -1)];
 }
 
 function randomNum(minNum, maxNum) {
