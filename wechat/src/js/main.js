@@ -46,8 +46,7 @@ function main() {
     if (isPraiseParam) {
         timeline(praiseCount);
     } else {
-        messageContent = "test~";
-        send(messageContent);
+        send("你好～", 10);
     }
 
     logd("脚本执行完毕------>");
