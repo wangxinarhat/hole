@@ -56,15 +56,13 @@ function record(nickname, content) {
     if (queryRet && Object(queryRet).length > 0) {
         logd("record ：更新数据 ～");
         let times = parseInt(queryRet[0]["times"]) + 1;
+        let curTimestamp = Date.parse(new Date());
         logd("record ：给 " + nickname + " 第 " + times + " 次，发祝福消息了～");
-        let dataMap = {
-            "nickname": nickname,
-            "times": times,
-            "update_time": Date.parse(new Date()),
-            "last_message": content
-        }
-        logd("record ：dataMap = " + JSON.stringify(dataMap));
-        let updateRet = sqlite.update("opt_log", dataMap, "nickname = " + nickname);
+
+        let sql = "UPDATE opt_log SET nickname =".concat('\"').concat(nickname).concat('\"').concat(", times = ").concat(times).concat(", update_time =").concat(curTimestamp).concat(", last_message =").concat('\"').concat(content).concat('\"').concat(" WHERE nickname = ").concat('\"').concat(nickname).concat('\";');
+
+        logd("record ：sql = " + sql);
+        let updateRet = sqlite.execSql(sql);
         logd("record ：更新结果 = " + updateRet);
     } else {
         let times = 1

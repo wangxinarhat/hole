@@ -1,14 +1,11 @@
-CREATE TABLE IF NOT EXISTS "opt_log" (
-	"nickname"	TEXT NOT NULL,
-	"times"	INTEGER,
-	"update_time"	INTEGER,
-	"last_message"	TEXT NOT NULL,
-	PRIMARY KEY("nickname")
-);
+let sql = "select * from ".concat("opt_log").concat(" where nickname = ").concat('\"').concat(nickname).concat('\";');
 
-INSERT INTO "main"."opt_log" ("nickname", "times", "update_time", "last_message") VALUES ('kaka', '2', '1642841262092', '白日依山尽，黄河入海流。
-欲穷千里目，更上一层楼。');
-INSERT INTO "opt_log" ("nickname", "times", "update_time", "last_message") VALUES('kaka', '2', '1642841262092', '白日依山尽，黄河入海流。欲穷千里目，更上一层楼。');
+let sql = "INSERT INTO \"opt_log\" (\"nickname\", \"times\", \"update_time\", \"last_message\") VALUES(".concat('\"').concat(nickname).concat('\"').concat(",").concat(times).concat(",").concat(curTimestamp).concat(",").concat('\"').concat(content).concat('\"').concat(");");
 
-INSERT INTO "main"."opt_log" ("nickname", "times", "update_time", "last_message") VALUES("lonely.", 1, 1642847627000,"前不见古人，后不见来者。
-念天地之悠悠，独怆然而涕下！");
+let sql = "UPDATE opt_log SET nickname = 'kaka', times = 5,update_time=1988,last_message=\"zuihou yitiao\" WHERE nickname = \"kaka\";";
+
+UPDATE opt_log SET nickname = 'kaka', times = 5,update_time=1988,last_message="zuihou yitiao" WHERE nickname = "kaka";
+
+
+let sql = "UPDATE opt_log SET nickname =".concat('\"').concat(nickname).concat('\"').concat(", times = ").concat(times).concat(", update_time =").concat(curTimestamp).concat(", last_message =").concat('\"').concat(message).concat('\"').concat(" WHERE nickname = ").concat('\"').concat(nickname).concat('\";');
+

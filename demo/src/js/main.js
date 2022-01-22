@@ -25,16 +25,10 @@ function main() {
     let nickname = "kaka";
     let times = 1;
     let curTimestamp = Date.parse(new Date());
-    let content = "sfjhsdkjghsdkjgh";
+    let message = "sfjhsdkjghsdkjgh";
 
-    let sql = "select * from ".concat("opt_log").concat(" where nickname = ").concat('\"').concat(nickname).concat('\";');
+    let sql = "UPDATE opt_log SET nickname =".concat('\"').concat(nickname).concat('\"').concat(", times = ").concat(times).concat(", update_time =").concat(curTimestamp).concat(", last_message =").concat('\"').concat(message).concat('\"').concat(" WHERE nickname = ").concat('\"').concat(nickname).concat('\";');
 
-    parseInt(queryRet[0]["update_time"])
-
-
-    logd("时间差 = " + (Date.parse(new Date()) - parseInt("1642853324000")) / (60 * 1000) + " 分钟");
-    logd("时间差 = " + (Date.parse(new Date()) - 1642853324000) / (60 * 1000) + " 分钟");
-    logd("时间差 = " + (Date.parse(new Date()) - 1642853324000) / (24 * 40 * 60 * 1000) + " tian");
 
     logi(sql);
     //开始再这里编写代码了！！
