@@ -67,9 +67,8 @@ function send(content, count) {
                         if (sendNode) {
                             sendNode.click();
                             curCount++;
-                            logi("send : 进度 = " + curCount + " / " + count + " ; 给 " + friendNodes[i].text + " 发送祝福消息成功～");
+                            logi("send : 当前总进度 = " + curCount + " / " + count);
                             record(friendNodes[i].text, messageContent);
-
                             sleep(2000);
                             back();
                         } else {
