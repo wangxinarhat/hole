@@ -19,7 +19,7 @@ CommonUtilsWrapper.prototype.autoServiceStart = function (time) {
 }
 
 function randomPoem() {
-    return MSG_ARRAY[randomNum(0, MSG_ARRAY.length -1)];
+    return MSG_ARRAY[randomNum(0, MSG_ARRAY.length - 1)];
 }
 
 function randomNum(minNum, maxNum) {
@@ -35,6 +35,21 @@ function randomNum(minNum, maxNum) {
             break;
     }
 }
+
+function isInBlacklist(name) {
+    let index = BLACKLIST.indexOf(name);
+    if (index > -1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+const BLACKLIST = [
+    '腾讯新闻', '微信团队', '订阅号消息', '文件传输助手', 'QQ邮箱提醒', '腾讯云助手',
+    '丰巢智能柜', '顺丰速运', '微信支付', '服务通知', '铁路12306', '京东支付', '公众平台安全助手',
+    '微信公众平台'
+];
 
 
 const MSG_ARRAY = [
