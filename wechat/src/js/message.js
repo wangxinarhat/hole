@@ -44,12 +44,14 @@ function send(content, count) {
                 let messageContent = friendNodes[i].text.concat(content);
                 if (friendNodes[i].bounds.top < SCREEN_HEIGHT / 8 || friendNodes[i].bounds.bottom > SCREEN_HEIGHT / 8 * 7) {
                     logi("send : nickname = " + friendNodes[i].text + " 屏幕位置太高或者太低，跳过～");
+                    sleep(200);
                     continue;
                 } else if (isInBlacklist(friendNodes[i].text)) {
                     logi("send : nickname = " + friendNodes[i].text + " 在黑名单中，跳过～");
+                    sleep(200);
                     continue;
                 } else if (!isNeedMessage(friendNodes[i].text, messageContent)) {
-                    logi("send : nickname = " + friendNodes[i].text + " 已经发送过，今天不要再打扰～");
+                    sleep(200);
                     continue;
                 } else {
                     friendNodes[i].click();

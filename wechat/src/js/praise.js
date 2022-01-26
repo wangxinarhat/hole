@@ -1,9 +1,5 @@
-
 function timeline(praiseCount) {
-    logd("点赞任务 ： " + praiseCount);
-    if (!praiseCount) {
-        praiseCount = 88;
-    }
+    logd("timeline : praiseCount = " + praiseCount);
 
     // 打开发现tab
     let discoverySelector = text("发现").id("com.tencent.mm:id/f30").clz("android.widget.TextView");
@@ -12,7 +8,6 @@ function timeline(praiseCount) {
         discoveryNode.click();
         sleep(2000);
     }
-    logd("打开发现tab");
 
     // 打开朋友圈activity
     let timelineSelector = text("朋友圈").id("android:id/title").clz("android.widget.TextView");
@@ -21,7 +16,6 @@ function timeline(praiseCount) {
         timelineNode.click();
         sleep(2000);
     }
-    logd("打开朋友圈activity ");
 
     // 点赞
     let count = 0;
@@ -30,10 +24,10 @@ function timeline(praiseCount) {
         let praisePopSelector = id("com.tencent.mm:id/ng").desc("评论").clz("android.widget.ImageView");
         let praisePopNode = praisePopSelector.getOneNodeInfo(1000);
 
-        logi("praisePopNode = " + praisePopNode);
+        logi("timeline : praisePopNode = " + praisePopNode);
         //找不到pop入口，Y轴坐标太小、太大则滑动1/6屏幕，跳过
         if (!praisePopNode || praisePopNode.bounds.top < SCREEN_HEIGHT / 6 || praisePopNode.bounds.bottom > SCREEN_HEIGHT / 6 * 5) {
-            logi("找不到pop入口，Y轴坐标太小、太大则滑动 1/8 屏幕，跳过 ！！！ ");
+            logi("timeline : 找不到pop入口，Y轴坐标太小、太大则滑动 1/8 屏幕，跳过 ！！！ ");
             swipeAndSleep(SCREEN_HEIGHT / 8);
         } else {
             // 打开点赞、评论pop。
@@ -50,7 +44,7 @@ function timeline(praiseCount) {
                 }
             }
             if (!request) {
-                logw("尝试3次，申请截图权限失败，滑动 1/8 屏幕，跳过 ！！！ ");
+                logw("timeline : 尝试3次，申请截图权限失败，滑动 1/8 屏幕，跳过 ！！！ ");
                 swipeAndSleep(SCREEN_HEIGHT / 8);
                 continue;
             }
@@ -65,7 +59,7 @@ function timeline(praiseCount) {
                 }
             }
             if (tmpImage == null) {
-                logw("尝试3次，截图失败，滑动 1/8 屏幕，跳过 ！！！ ");
+                logw("timeline : 尝试3次，截图失败，滑动 1/8 屏幕，跳过 ！！！ ");
                 swipeAndSleep(SCREEN_HEIGHT / 8);
             } else {
                 let firstColor = "#4C4C4C-#101010";
@@ -73,14 +67,14 @@ function timeline(praiseCount) {
                 let points = image.findMultiColor(tmpImage, firstColor, multiColor, 0.9, 0, 0, 0, 0, 1, 1);
                 //这玩意是个数组
                 if (points && points.length > 0) {
-                    logd("points " + JSON.stringify(points));
+                    logd("timeline : points " + JSON.stringify(points));
                     clickPoint(points[0].x, points[0].y);
                     count++;
-                    logd("点赞成功，进度 ： " + count + " / " + praiseCount);
+                    logd("timeline : 点赞成功，进度 ： " + count + " / " + praiseCount);
                     sleep(2000);
                     swipeAndSleep(SCREEN_HEIGHT / 4);
                 } else {
-                    logi("找色失败，滑动 1/8 屏幕");
+                    logw("timeline : 找色失败，滑动 1/8 屏幕");
                     swipeAndSleep(SCREEN_HEIGHT / 8);
                 }
                 //图片要回收

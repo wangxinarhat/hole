@@ -1,35 +1,32 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- head 中 -->
     <link rel="stylesheet" href="css/materialize.min.css">
     <script src="htmljs/jquery.min.js"></script>
+    <script src="htmljs/materialize.min.js"></script>
 
-    <!--    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
 
-    <title>black hole</title>
     <script type="text/javascript">
         window.onload = function () {
             console.log("onload : ");
-            //1 初始化ui，使用jquery进行设置值
-            $("#praise_count").val(88);
-            $("#praise_timeline").attr("checked", "checked");
-            $("#card_praise_count").show();
-            $("#card_message").hide();
+            //1 初始化ui
+
 
             //2 设置监听
             $('input[type=radio][name=radio_opt]').change(function () {
                 console.log("change : value = " + $(this).val());
-                if ($(this).val() === "0") {
+                if ($(this).val() === "1") {
                     $("#card_praise_count").show();
                     $("#card_message").hide();
                 } else {
                     $("#card_message").show();
                     $("#card_praise_count").hide();
-
                 }
             });
         };
@@ -40,18 +37,19 @@
         });
     </script>
 </head>
+
 <body style="margin-left: 10px;margin-right: 10px">
 
 <form class="card-panel" style="display: flex;justify-content: space-around">
     <p>
         <label>
-            <input name="radio_opt" class="with-gap" type="radio" id="praise_timeline" value="0"/>
+            <input name="radio_opt" class="with-gap" type="radio" checked id="praise_timeline" value="1"/>
             <span>赞美</span>
         </label>
     </p>
     <p>
         <label>
-            <input name="radio_opt" class="with-gap" type="radio" id="bless_message" value="1"/>
+            <input name="radio_opt" class="with-gap" type="radio" id="bless_message" value="2"/>
             <span>消息</span>
         </label>
     </p>
@@ -85,26 +83,6 @@
 </div>
 
 
-<script src="htmljs/jquery.min.js"></script>
-<script src="htmljs/materialize.min.js"></script>
-
-
 </body>
-
-
-<script>
-
-    function startApplication() {
-        var praiseCount = $("#praise_count").val();
-        window.ec.saveConfig("praise_count", praiseCount);
-
-        console.log("startApplication : 是点赞吗 = " + $("#praise_timeline").prop("checked"));
-        window.ec.saveConfig("praise_timeline", $("#praise_timeline").prop("checked"));
-        window.ec.saveConfig("message_content", $("#message_content").val());
-        window.ec.start()
-    }
-
-</script>
-
 
 </html>
