@@ -30,7 +30,7 @@ function send(content, count) {
     // 发消息
     let startTimestamp = Date.parse(new Date());
     let curCount = 0;
-    while (curCount < count (Date.parse(new Date()) - startTimestamp) < 60 * 60 * 1000) {
+    while (curCount < count && (Date.parse(new Date()) - startTimestamp) < 60 * 60 * 1000) {
         let friendSelectors = id("com.tencent.mm:id/hga").clz("android.view.View");
         let friendNodes = friendSelectors.getNodeInfo(1000);
         // 找聊天窗口列表，找不到滑动。

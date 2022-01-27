@@ -22,7 +22,7 @@ function main() {
     } else {
         logi("main : 发消息 ！！！ ");
         if ("" === readConfigString("message_content")) {
-            toast("请填入消息内容～");
+            toast("请填入祝福内容～");
             return;
         }
     }
