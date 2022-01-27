@@ -1,6 +1,9 @@
 function timeline(praiseCount) {
     logd("timeline : praiseCount = " + praiseCount);
 
+    //恢复之前的输入法
+    agentEvent.restoreIme()
+
     // 打开发现tab
     let discoverySelector = text("发现").id("com.tencent.mm:id/f30").clz("android.widget.TextView");
     let discoveryNode = discoverySelector.getOneNodeInfo(100);
