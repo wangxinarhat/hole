@@ -5,7 +5,7 @@ function main() {
 
     logd("开始执行脚本------>")
     //获取数据
-    let isPraise = readConfigString("praise_timeline");
+    let isPraise = "true" === readConfigString("praise_timeline");
     let messageContent = readConfigString("message_content");
     let praiseCount = readConfigInt("praise_count");
     logd("main : isPraise = " + isPraise + " ; type = " + typeof isPraise);
@@ -13,14 +13,12 @@ function main() {
     logd("main : praiseCount = " + praiseCount + " ; type = " + typeof praiseCount);
 
     //校验数据
-    if ("true" === isPraise) {
-        logi("main : 点赞 ！！！ ");
+    if (isPraise) {
         if (praiseCount < 88 || praiseCount > 1888) {
             toast("点赞数量应该 88～1888");
             return;
         }
     } else {
-        logi("main : 发消息 ！！！ ");
         if ("" === readConfigString("message_content")) {
             toast("请填入祝福内容～");
             return;
@@ -42,14 +40,13 @@ function main() {
     sleep(5000);
 
     //引流程序
-    if ("true" === isPraise) {
+    if (isPraise) {
         timeline(praiseCount);
     } else {
         send(messageContent, 1888);
     }
 
     logd("main : 脚本执行完毕------>");
-
     exit();
 }
 
