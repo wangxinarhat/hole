@@ -22,12 +22,12 @@ function isNeedMessage(nickname, message) {
         let timeDiff = (Date.parse(new Date()) - parseInt(queryRet[0]["update_time"])) / (24 * 60 * 60 * 1000);
         // logi("isNeedMessage : 时间差 = " + timeDiff + " 天");
         // logi("isNeedMessage : 最后一条消息是否重复 = " + (queryRet[0]["last_message"] === message));
+        // if (timeDiff < 0.000001) {
         if (timeDiff < 15) {
-            // if (timeDiff < 0.000001) {
             logi("isNeedMessage  ： nickname = " + nickname + " 15天内发送过消息，今天不要再打扰了～");
             isNeed = false;
         } else if (queryRet[0]["last_message"] === message) {
-            logw("isNeedMessage  ： nickname = " + nickname + " 这条消息15天前已经发送过了～");
+            logw("isNeedMessage  ： nickname = " + nickname + " 这条消息已经发送过了，无需再发～");
             isNeed = false;
         } else {
             logi("isNeedMessage  ： nickname = " + nickname + " 之前发送过，但今天还是可以再发～");

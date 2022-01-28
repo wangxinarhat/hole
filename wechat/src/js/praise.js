@@ -23,7 +23,7 @@ function timeline(praiseCount) {
     // 点赞
     let startTimestamp = Date.parse(new Date());
     let count = 0;
-    while (count < praiseCount && (Date.parse(new Date()) - startTimestamp) < 2 * 60 * 60 * 1000) {
+    while (count < praiseCount && (Date.parse(new Date()) - startTimestamp) < 3 * 60 * 60 * 1000) {
         // 打开点赞窗口，找到点赞评论入口，点击，找不到，向下滑。
         let praisePopSelector = id("com.tencent.mm:id/ng").desc("评论").clz("android.widget.ImageView");
         let praisePopNode = praisePopSelector.getOneNodeInfo(1000);

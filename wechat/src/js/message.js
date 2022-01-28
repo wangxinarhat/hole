@@ -3,8 +3,8 @@ function send(content, count) {
     if (!content || "" === content) {
         return
     }
-    if (count < 20) {
-        count = 20;
+    if (count < 88) {
+        count = 88;
     }
     let result = agentEvent.setCurrentIme();
     if (result) {
