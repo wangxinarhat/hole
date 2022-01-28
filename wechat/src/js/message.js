@@ -3,8 +3,8 @@ function send(content, count) {
     if (!content || "" === content) {
         return
     }
-    if (count < 88) {
-        count = 88;
+    if (count < 188) {
+        count = 188;
     }
     let result = agentEvent.setCurrentIme();
     if (result) {
@@ -30,7 +30,7 @@ function send(content, count) {
     // 发消息
     let startTimestamp = Date.parse(new Date());
     let curCount = 0;
-    while (curCount < count && (Date.parse(new Date()) - startTimestamp) < 60 * 60 * 1000) {
+    while (curCount < count && (Date.parse(new Date()) - startTimestamp) < 2 * 60 * 60 * 1000) {
         let friendSelectors = id("com.tencent.mm:id/hga").clz("android.view.View");
         let friendNodes = friendSelectors.getNodeInfo(1000);
         // 找聊天窗口列表，找不到滑动。

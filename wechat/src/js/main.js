@@ -15,8 +15,8 @@ function main() {
     //校验数据
     if ("true" === isPraise) {
         logi("main : 点赞 ！！！ ");
-        if (praiseCount < 68 || praiseCount > 188) {
-            toast("点赞数量应该 68～188");
+        if (praiseCount < 88 || praiseCount > 1888) {
+            toast("点赞数量应该 88～1888");
             return;
         }
     } else {
@@ -45,7 +45,7 @@ function main() {
     if ("true" === isPraise) {
         timeline(praiseCount);
     } else {
-        send(messageContent, 1688);
+        send(messageContent, 1888);
     }
 
     logd("main : 脚本执行完毕------>");
