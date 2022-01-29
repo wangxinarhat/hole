@@ -13,7 +13,6 @@
         window.onload = function () {
             console.log("onload : ");
             //1 初始化ui，使用jquery进行设置值
-            $("#praise_count").val(88);
             $("#praise_timeline").attr("checked", "checked");
             $("#card_praise_count").show();
             $("#card_message").hide();
@@ -63,7 +62,7 @@
 <div class="card-panel" id="card_praise_count">
     <div class="input-field  inline col s4">
         <input id="praise_count" type="number" class="validate">
-        <label for="praise_count"></label>
+        <label for="praise_count">点赞数量</label>
     </div>
 </div>
 

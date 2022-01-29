@@ -61,8 +61,7 @@ function send(content, count) {
                     let inputNode = inputSelector.getOneNodeInfo(1000);
                     if (inputNode) {
                         inputNode.clearText();
-                        sleep(500);
-                        //let inputText = friendNodes[i].text.concat("您好，感谢您过去对豆壳餐厅的支持～\n\n新春佳节将至，祝愿您在新的一年里，\n所有的希望都能如愿，\n所有的梦想都能实现，\n所有的等候都能出现，\n所有的付出都能兑现!");
+                        sleep(1000);
                         inputNode.imeInputText(messageContent);
                         sleep(2000);
                         let sendSelector = id("com.tencent.mm:id/b8k").clz("android.widget.Button");
@@ -73,14 +72,14 @@ function send(content, count) {
                             logi("send : 当前总进度 = " + curCount + " / " + count);
                             record(friendNodes[i].text, messageContent);
                             sleep(2000);
-                            back();
+                            confirmBack();
                         } else {
                             loge("send : 找不到发送按钮～");
-                            back();
+                            confirmBack();
                         }
                     } else {
                         loge("send : 找不到输入框～");
-                        back();
+                        confirmBack();
                     }
                 }
                 sleep(3000);
@@ -93,4 +92,25 @@ function send(content, count) {
     //恢复之前的输入法
     agentEvent.restoreIme()
 
+}
+
+function confirmBack() {
+    let ret = false;
+    let backSelector = id("com.tencent.mm:id/fz").clz("android.widget.LinearLayout");
+    let backNode = backSelector.getOneNodeInfo(1000);
+    if (backNode) {
+        ret = backNode.click();
+    }
+    if (!ret) {
+        loge("confirmBack : 没找到返回Icon ");
+        for (let i = 0; i < 3; i++) {
+            ret = back();
+            sleep(1500);
+            if (ret) {
+                break;
+            }
+        }
+    }
+    logi("confirmBack : back ret = " + ret);
+    return ret;
 }
