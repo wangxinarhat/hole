@@ -253,5 +253,5 @@ screenshot/
 nodeimage/
 colorimage/
 flow/
-wechat/libs/
+wechat/libs/*
 
