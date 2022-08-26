@@ -1,3 +1,15 @@
+
+
+/**
+ * 检查apk主版本是否是8，如果不是会有异常发生
+ * 该函数可以在程序中调用，防止iec和apk版本不一致
+ * 适合版本 EC 8.2.0+
+ */
+function checkApkVersion8() {
+    return configWrapper.checkApkVersion8();
+}
+
+
 /**
  * 读取JSON中的整型数据
  * <Br/>
@@ -2397,21 +2409,7 @@ function isValidNodeInfo(nodeinfo) {
     return false;
 }
 
-/**
- * 设置获取节点的模式
- * @param mode 1 是增强型， 2 是快速型，默认是增强型
- * @param fetchInvisibleNode 是否抓取隐藏的元素，默认不抓取
- * @param fetchNotImportantNode 是否抓取不重要的元素
- * @return boolean|布尔型
- */
-function setFetchNodeMode(mode, fetchInvisibleNode, fetchNotImportantNode) {
-    if (isAccMode()) {
-        return acEvent.setFetchNodeMode(mode, fetchInvisibleNode, fetchNotImportantNode, "nsf");
-    } else if (isAgentMode()) {
-        return agentEvent.setFetchNodeMode(mode, fetchInvisibleNode, fetchNotImportantNode, "nsf");
-    }
-    return false;
-}
+
 
 /**
  * 设置获取节点的模式

@@ -161,7 +161,7 @@ HttpWrapper.prototype.request = function (param) {
     }
     var p = JSON.stringify(param);
     var x = httpWrapper.request(p);
-   if (x == null || x=="") {
+    if (x == null || x == "") {
         return null;
     }
     return new Response(JSON.parse(x));
@@ -173,7 +173,7 @@ HttpWrapper.prototype.requestEx = function (param) {
     }
     var p = JSON.stringify(param);
     var x = httpWrapper.requestEx(p);
-    if (x == null || x=="") {
+    if (x == null || x == "") {
         return null;
     }
     return new Response(JSON.parse(x));
@@ -202,34 +202,17 @@ function Response(data) {
  * 创建一个websocket
  * @param url 要连接的地址
  * @param header 参数头
- * @return {@link WebSocket } WebSocket对象
- */
-HttpWrapper.prototype.newWebsocket = function (url, header) {
-    var p = null;
-    if (header != null) {
-        p = JSON.stringify(header);
-    }
-    var ws = httpWrapper.websocket(url, p,1);
-    return new WebSocket(ws);
-};
-
-/**
- * 创建一个websocket
- * @param url 要连接的地址
- * @param header 参数头
  * @param type 类库类型，1 okhttp 2 javawebsocket
  * @return {@link WebSocket } WebSocket对象
  */
-HttpWrapper.prototype.newWebsocket = function (url, header,type) {
+HttpWrapper.prototype.newWebsocket = function (url, header, type) {
     var p = null;
     if (header != null) {
         p = JSON.stringify(header);
     }
-    var ws = httpWrapper.websocket(url, p,type);
+    var ws = httpWrapper.websocket(url, p, type);
     return new WebSocket(ws);
 };
-
-
 
 
 function WebSocket(ws) {
@@ -238,16 +221,26 @@ function WebSocket(ws) {
 
 
 /**
- * 开始异步连接
-* @return {bool} true 代表成功 false代表失败
+ * 发送心跳函数
+ * 这里调用一次即可，内部已经实现了按照设定的周期时间发送
+ * @param heartDataBinCallback 心跳的二进制数据，一定要返回byte[]数组
+ * @param heartDataStrCallback 心跳的文本数据，直接返回字符串
+ * @param period               心跳周期 时间是毫秒
+ * @param cancelOld            是否取消老的，true 或者false
  */
-WebSocket.prototype.connect = function () {
+WebSocket.prototype.startHeartBeat = function (heartDataBinCallback, heartDataStrCallback, period, cancelOld) {
     if (this.websocketClient != null) {
-     return   this.websocketClient.connect(10*1000);
+        this.websocketClient.startHeartBeat(heartDataBinCallback, heartDataStrCallback, period, cancelOld);
     }
-    return false;
 };
-
+/**
+ * 停止心跳函数
+ */
+WebSocket.prototype.stopHeartBeat = function () {
+    if (this.websocketClient != null) {
+        this.websocketClient.stopHeartBeat();
+    }
+};
 /**
  * 开始异步连接
  * @param timeout 链接超时时间
@@ -255,9 +248,9 @@ WebSocket.prototype.connect = function () {
  */
 WebSocket.prototype.connect = function (timeout) {
     if (this.websocketClient != null) {
-    return    this.websocketClient.connect(timeout);
+        return this.websocketClient.connect(timeout);
     }
-     return false;
+    return false;
 };
 
 
@@ -301,7 +294,6 @@ WebSocket.prototype.connectBlocking = function (timeout) {
 };
 
 
-
 /**
  * 是否已经关闭
  * @return true 代表已经关闭，false 未关闭
@@ -312,7 +304,6 @@ WebSocket.prototype.isClosed = function () {
     }
     return true;
 };
-
 
 
 /**
@@ -402,7 +393,7 @@ WebSocket.prototype.setCallTimeout = function (timeout) {
  * @return true 代表成功，false 失败
  */
 WebSocket.prototype.sendText = function (text) {
-  return  this.websocketClient.sendText(text);
+    return this.websocketClient.sendText(text);
 };
 /**
  * 发送字节信息
@@ -410,7 +401,7 @@ WebSocket.prototype.sendText = function (text) {
  * @return true 代表成功，false 失败
  */
 WebSocket.prototype.sendBinary = function (bin) {
-   return this.websocketClient.sendBinary(bin);
+    return this.websocketClient.sendBinary(bin);
 };
 
 /**

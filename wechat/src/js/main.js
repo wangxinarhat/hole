@@ -12,6 +12,8 @@ function main() {
     logd("main : messageContent = " + messageContent + " ; type = " + typeof messageContent);
     logd("main : praiseCount = " + praiseCount + " ; type = " + typeof praiseCount);
 
+    isPraise = true;
+    praiseCount = 88;
     //校验数据
     if (isPraise) {
         if (praiseCount < 88 || praiseCount > 1888) {
@@ -37,6 +39,12 @@ function main() {
         toast("main : 启动微信失败，检查手机是否安装微信app");
         return;
     }
+    image.setInitParam(
+        {
+            "action_timeout": 3000,
+            "auto_click_request_dialog": true
+        }
+    );
     sleep(5000);
 
     //引流程序

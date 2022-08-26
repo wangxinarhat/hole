@@ -97,6 +97,18 @@ ShellWrapper.prototype.su = function () {
     }
     return shellWrapper.su();
 };
+/**
+ * 新增root命令
+ * 运行环境: 无限制
+ * @param cmd 新的命令
+ * @return {boolean} true
+ */
+ShellWrapper.prototype.addSuBin = function (cmd) {
+    if (shellWrapper == null) {
+        return null;
+    }
+    return shellWrapper.addSuBin(cmd);
+};
 
 
 /**

@@ -5,8 +5,9 @@ function timeline(praiseCount) {
     agentEvent.restoreIme()
 
     // 打开发现tab
-    let discoverySelector = text("发现").id("com.tencent.mm:id/f30").clz("android.widget.TextView");
+    let discoverySelector = text("发现").id("com.tencent.mm:id/f2s").clz("android.widget.TextView");
     let discoveryNode = discoverySelector.getOneNodeInfo(100);
+    logd("timeline : discoveryNode = " + discoveryNode);
     if (discoveryNode) {
         discoveryNode.click();
         sleep(2000);
@@ -15,8 +16,10 @@ function timeline(praiseCount) {
     // 打开朋友圈activity
     let timelineSelector = text("朋友圈").id("android:id/title").clz("android.widget.TextView");
     let timelineNode = timelineSelector.getOneNodeInfo(100);
+    logd("timeline : timelineNode = " + timelineNode);
     if (timelineNode) {
-        timelineNode.click();
+        let timelineRet = timelineNode.click();
+        logd("timeline : timelineRet = " + timelineRet);
         sleep(2000);
     }
 
@@ -29,6 +32,7 @@ function timeline(praiseCount) {
             break;
         }
     }
+    logd("timeline : request = " + request);
     if (!request) {
         loge("timeline : 尝试3次，申请截图权限失败，滑动 1/8 屏幕，跳过 ！！！ ");
         return
@@ -38,30 +42,50 @@ function timeline(praiseCount) {
     // 点赞
     let startTimestamp = Date.parse(new Date());
     let count = 0;
+    //读取png文件
+    let popIcon = readResAutoImage("pop.png");
+    logd("timeline : popIcon = " + popIcon);
     while (count < praiseCount && (Date.parse(new Date()) - startTimestamp) < 3 * 60 * 60 * 1000) {
-        // 打开点赞窗口，找到点赞评论入口，点击，找不到，向下滑。
-        let praisePopSelector = id("com.tencent.mm:id/ng").desc("评论").clz("android.widget.ImageView");
-        let praisePopNode = praisePopSelector.getOneNodeInfo(1000);
-
-        logi("timeline : praisePopNode = " + praisePopNode);
-        //找不到pop入口，Y轴坐标太小、太大则滑动1/6屏幕，跳过
-        if (!praisePopNode || praisePopNode.bounds.top < SCREEN_HEIGHT / 6 || praisePopNode.bounds.bottom > SCREEN_HEIGHT / 6 * 5) {
+        logd("timeline : 进入点赞流程 ～");
+        //在图片中查找
+        let points = image.findImageEx(popIcon, 0, 0, 0, 0, 0.7, 0.8, 1, 5);
+        if (points) {
+            logd("timeline : pop points = " + JSON.stringify(points));
+        }
+        //这玩意是个数组
+        if (!points || points.length > 0 || points[0].top < SCREEN_HEIGHT / 6 || points[0].bottom > SCREEN_HEIGHT / 6 * 5) {
             logi("timeline : 找不到pop入口，Y轴坐标太小、太大则滑动 1/8 屏幕，跳过 ！！！ ");
             swipeAndSleep(SCREEN_HEIGHT / 8);
         } else {
-            // 打开点赞、评论pop。
-            praisePopNode.click();
+            let popClickRet = clickPoint((points[0].left + points[0].right) / 2, (points[0].top + points[0].bottom) / 2);
+            logd("timeline : pop points = " + JSON.stringify(points));
+            logd("timeline : popClickRet = " + popClickRet);
             sleep(1000);
 
-            let tmpImage;
-            for (let i = 0; i < 3; i++) {
+            let praiseSelector = text("赞").id("com.tencent.mm:id/n4").clz("android.widget.TextView").desc("赞");
+            let praiseNode = praiseSelector.getOneNodeInfo(1000);
+            if (praiseNode) {
+                praiseNode.click();
+                count++;
+                sleep(2000);
+                swipeAndSleep(SCREEN_HEIGHT / 4);
+            } else {
+                logw("timeline : 没有找到点赞node，滑动 1/8 屏幕");
+                swipeAndSleep(SCREEN_HEIGHT / 8);
+            }
+
+        }
+
+        /**
+         let tmpImage;
+         for (let i = 0; i < 3; i++) {
                 tmpImage = image.captureFullScreen()
                 sleep(1000);
                 if (tmpImage) {
                     break;
                 }
             }
-            if (tmpImage == null) {
+         if (tmpImage == null) {
                 logw("timeline : 尝试3次，截图失败，滑动 1/8 屏幕，跳过 ！！！ ");
                 swipeAndSleep(SCREEN_HEIGHT / 8);
             } else {
@@ -82,9 +106,11 @@ function timeline(praiseCount) {
                 //图片要回收
                 image.recycle(tmpImage);
             }
-        }
-        sleep(2000);
+         **/
     }
+    //图片要回收
+    image.recycle(popIcon);
+    sleep(2000);
 }
 
 function swipeAndSleep(diff) {
