@@ -1,6 +1,5 @@
 function timeline(praiseCount) {
     logd("timeline : praiseCount = " + praiseCount);
-
     //恢复之前的输入法
     agentEvent.restoreIme()
 
@@ -32,27 +31,25 @@ function timeline(praiseCount) {
             break;
         }
     }
-    logd("timeline : request = " + request);
+    logd("timeline : 申请截图权限结果 request = " + request);
+
     if (!request) {
         loge("timeline : 尝试3次，申请截图权限失败，滑动 1/8 屏幕，跳过 ！！！ ");
         return
     }
     sleep(1000);
-
-    // 点赞
+    let startTimestamp1 = Date.parse(new Date());
+    let popIcon = readResAutoImage("pop.png");
+    let startTimestamp2 = Date.parse(new Date());
+    logi("读图时长 = " + (startTimestamp2 - startTimestamp1) / 1000 + " 秒");
     let startTimestamp = Date.parse(new Date());
     let count = 0;
-    //读取png文件
-    let popIcon = readResAutoImage("pop.png");
-    logd("timeline : popIcon = " + popIcon);
     while (count < praiseCount && (Date.parse(new Date()) - startTimestamp) < 3 * 60 * 60 * 1000) {
         logd("timeline : 进入点赞流程 ～");
-        //在图片中查找
-        let points = image.findImageEx(popIcon, 0, 0, 0, 0, 0.7, 0.8, 1, 5);
+        let points = image.findImageEx(popIcon, 0, 0, 0, 0, 0.7, 0.9, 10, 5);
         if (points) {
-            logd("timeline : pop points = " + JSON.stringify(points));
+            logd("points " + JSON.stringify(points));
         }
-        //这玩意是个数组
         if (!points || points.length > 0 || points[0].top < SCREEN_HEIGHT / 6 || points[0].bottom > SCREEN_HEIGHT / 6 * 5) {
             logi("timeline : 找不到pop入口，Y轴坐标太小、太大则滑动 1/8 屏幕，跳过 ！！！ ");
             swipeAndSleep(SCREEN_HEIGHT / 8);
@@ -108,8 +105,7 @@ function timeline(praiseCount) {
             }
          **/
     }
-    //图片要回收
-    image.recycle(popIcon);
+    image.recycle(popIcon)
     sleep(2000);
 }
 

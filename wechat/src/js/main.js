@@ -33,19 +33,22 @@ function main() {
         // exit();
         return;
     }
+
+    if (!image.initOpenCV()) {
+        toast("初始化openCV失败,停止脚本!")
+        loge("初始化openCV失败,停止脚本!")
+        exit()
+    }
+    image.releaseScreenCapture();
+    sleep(2000);
+
     let startRet = utils.openAppByName("微信");
     logd("main : 启动微信结果 ： " + startRet);
     if (!startRet) {
         toast("main : 启动微信失败，检查手机是否安装微信app");
         return;
     }
-    image.setInitParam(
-        {
-            "action_timeout": 3000,
-            "auto_click_request_dialog": true
-        }
-    );
-    sleep(5000);
+    sleep(3000);
 
     //引流程序
     if (isPraise) {
