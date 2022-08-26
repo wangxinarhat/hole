@@ -12,8 +12,6 @@ function main() {
     logd("main : messageContent = " + messageContent + " ; type = " + typeof messageContent);
     logd("main : praiseCount = " + praiseCount + " ; type = " + typeof praiseCount);
 
-    isPraise = true;
-    praiseCount = 88;
     //校验数据
     if (isPraise) {
         if (praiseCount < 88 || praiseCount > 1888) {

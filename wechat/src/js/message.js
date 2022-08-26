@@ -17,7 +17,7 @@ function send(content, count) {
     }
 
     // 打开消息tab
-    let tabSelector = text("微信").id("com.tencent.mm:id/f30").clz("android.widget.TextView");
+    let tabSelector = text("微信").id("com.tencent.mm:id/f2s").clz("android.widget.TextView");
     let tabNode = tabSelector.getOneNodeInfo(100);
     if (tabNode) {
         tabNode.click();
@@ -31,7 +31,7 @@ function send(content, count) {
     let startTimestamp = Date.parse(new Date());
     let curCount = 0;
     while (curCount < count && (Date.parse(new Date()) - startTimestamp) < 2 * 60 * 60 * 1000) {
-        let friendSelectors = id("com.tencent.mm:id/hga").clz("android.view.View");
+        let friendSelectors = id("com.tencent.mm:id/hg4").clz("android.view.View");
         let friendNodes = friendSelectors.getNodeInfo(1000);
         // 找聊天窗口列表，找不到滑动。
         if (!friendNodes || friendNodes.length < 1) {
@@ -42,7 +42,6 @@ function send(content, count) {
                 logd("send : 屏幕内发消息进度 = " + i + " / " + friendNodes.length);
                 //todo 查看是否群聊，如果是，back
                 logd("send : nickname = " + friendNodes[i].text);
-                let messageContent = friendNodes[i].text.concat(content);
                 if (friendNodes[i].bounds.top < SCREEN_HEIGHT / 8 || friendNodes[i].bounds.bottom > SCREEN_HEIGHT / 8 * 7) {
                     logi("send : nickname = " + friendNodes[i].text + " 屏幕位置太高或者太低，跳过～");
                     sleep(200);
@@ -51,7 +50,7 @@ function send(content, count) {
                     logi("send : nickname = " + friendNodes[i].text + " 在黑名单中，跳过～");
                     sleep(200);
                     continue;
-                } else if (!isNeedMessage(friendNodes[i].text, messageContent)) {
+                } else if (!isNeedMessage(friendNodes[i].text, content)) {
                     sleep(200);
                     continue;
                 } else {
@@ -62,7 +61,7 @@ function send(content, count) {
                     if (inputNode) {
                         inputNode.clearText();
                         sleep(1000);
-                        inputNode.imeInputText(messageContent);
+                        inputNode.imeInputText(content);
                         sleep(2000);
                         let sendSelector = id("com.tencent.mm:id/b8k").clz("android.widget.Button");
                         let sendNode = sendSelector.getOneNodeInfo(1000);
@@ -70,7 +69,7 @@ function send(content, count) {
                             sendNode.click();
                             curCount++;
                             logi("send : 当前总进度 = " + curCount + " / " + count);
-                            record(friendNodes[i].text, messageContent);
+                            record(friendNodes[i].text, content);
                             sleep(2000);
                             confirmBack();
                         } else {
@@ -96,7 +95,7 @@ function send(content, count) {
 
 function confirmBack() {
     let ret = false;
-    let backSelector = id("com.tencent.mm:id/fz").clz("android.widget.LinearLayout");
+    let backSelector = id("com.tencent.mm:id/g0").clz("android.widget.LinearLayout");
     let backNode = backSelector.getOneNodeInfo(1000);
     if (backNode) {
         ret = backNode.click();
