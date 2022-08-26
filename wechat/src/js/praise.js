@@ -38,24 +38,21 @@ function timeline(praiseCount) {
         return
     }
     sleep(1000);
-    let startTimestamp1 = Date.parse(new Date());
     let popIcon = readResAutoImage("pop.png");
-    let startTimestamp2 = Date.parse(new Date());
-    logi("读图时长 = " + (startTimestamp2 - startTimestamp1) / 1000 + " 秒");
     let startTimestamp = Date.parse(new Date());
     let count = 0;
     while (count < praiseCount && (Date.parse(new Date()) - startTimestamp) < 3 * 60 * 60 * 1000) {
         logd("timeline : 进入点赞流程 ～");
         let points = image.findImageEx(popIcon, 0, 0, 0, 0, 0.7, 0.9, 10, 5);
         if (points) {
-            logd("points " + JSON.stringify(points));
+            logd("timeline : pop points length = " + points.length);
+            logd("timeline : pop points = " + JSON.stringify(points));
         }
-        if (!points || points.length > 0 || points[0].top < SCREEN_HEIGHT / 6 || points[0].bottom > SCREEN_HEIGHT / 6 * 5) {
+        if (!points || points.length === 0 || points[0].top < SCREEN_HEIGHT / 6 || points[0].bottom > SCREEN_HEIGHT / 6 * 5) {
             logi("timeline : 找不到pop入口，Y轴坐标太小、太大则滑动 1/8 屏幕，跳过 ！！！ ");
             swipeAndSleep(SCREEN_HEIGHT / 8);
         } else {
             let popClickRet = clickPoint((points[0].left + points[0].right) / 2, (points[0].top + points[0].bottom) / 2);
-            logd("timeline : pop points = " + JSON.stringify(points));
             logd("timeline : popClickRet = " + popClickRet);
             sleep(1000);
 
@@ -64,11 +61,12 @@ function timeline(praiseCount) {
             if (praiseNode) {
                 praiseNode.click();
                 count++;
+                logi("timeline : 点赞成功，滑动 1/4 屏幕");
                 sleep(2000);
                 swipeAndSleep(SCREEN_HEIGHT / 4);
             } else {
-                logw("timeline : 没有找到点赞node，滑动 1/8 屏幕");
-                swipeAndSleep(SCREEN_HEIGHT / 8);
+                logi("timeline : 没有找到点赞node，滑动 1/4 屏幕");
+                swipeAndSleep(SCREEN_HEIGHT / 4);
             }
 
         }

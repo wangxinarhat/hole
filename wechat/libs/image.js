@@ -1,44 +1,3 @@
-function PointIndex(javaPoint) {
-    this.x = 0;
-    this.y = 0;
-    this.index = -1;
-    if (javaPoint != null) {
-        this.x = javaPoint["x"];
-        this.y = javaPoint["y"];
-        this.index = javaPoint["index"];
-    }
-}
-
-PointIndex.get = function () {
-    return new PointIndex(null);
-};
-PointIndex.jsonToObject = function (res) {
-    if (res == null || res == "") {
-        return null;
-    }
-    res = JSON.parse(res);
-    if (res == null) {
-        return null;
-    }
-    return new Point(res);
-};
-PointIndex.prototype.setX = function (x) {
-    this.x = x;
-    return this;
-};
-PointIndex.prototype.setY = function (y) {
-    this.y = y;
-    return this;
-};
-PointIndex.prototype.setIndex = function (index) {
-    this.index = index;
-    return this;
-};
-PointIndex.prototype.toJSONString = function () {
-    return JSON.stringify(this);
-};
-
-
 function ImageWrapper() {
 
 }
@@ -61,7 +20,7 @@ ImageWrapper.prototype.setInitParam = function (param) {
  */
 ImageWrapper.prototype.initOpenCV = function () {
     if (imageWrapper == null) {
-        return false;
+        return;
     }
     return imageWrapper.initOpenCV();
 };
@@ -90,7 +49,7 @@ ImageWrapper.prototype.initOpenCV = function () {
  */
 ImageWrapper.prototype.requestScreenCapture = function (timeout, type) {
     if (imageWrapper == null) {
-        return false;
+        return;
     }
     return imageWrapper.requestScreenCapture(timeout, type);
 };
@@ -127,7 +86,7 @@ ImageWrapper.prototype.releaseScreenCapture = function () {
  */
 ImageWrapper.prototype.captureScreen = function (retryNumber, x, y, ex, ey) {
     if (imageWrapper == null) {
-        return null;
+        return;
     }
     var uuid = imageWrapper.captureScreen(retryNumber, x, y, ex - x, ey - y);
     if (uuid != null) {
@@ -148,7 +107,7 @@ ImageWrapper.prototype.captureScreen = function (retryNumber, x, y, ex, ey) {
  */
 ImageWrapper.prototype.captureScreenBitmap = function (format, x, y, ex, ey, q) {
     if (imageWrapper == null) {
-        return null;
+        return;
     }
     return imageWrapper.captureScreenBitmap(format, x, y, ex - x, ey - y, q);
 };
@@ -160,7 +119,7 @@ ImageWrapper.prototype.captureScreenBitmap = function (format, x, y, ex, ey, q) 
  */
 ImageWrapper.prototype.captureFullScreen = function () {
     if (imageWrapper == null) {
-        return null;
+        return;
     }
     var uuid = imageWrapper.captureFullScreen();
     if (uuid != null) {
@@ -177,7 +136,7 @@ ImageWrapper.prototype.captureFullScreen = function () {
  */
 ImageWrapper.prototype.captureFullScreenEx = function () {
     if (imageWrapper == null) {
-        return null;
+        return;
     }
     var uuid = imageWrapper.captureFullScreenEx();
     if (uuid != null) {
@@ -204,7 +163,7 @@ ImageWrapper.prototype.captureFullScreenEx = function () {
  */
 ImageWrapper.prototype.captureToFile = function (retryNumber, x, y, ex, ey, path) {
     if (imageWrapper == null) {
-        return false;
+        return;
     }
     return imageWrapper.captureScreenToFile(retryNumber, x, y, ex - x, ey - y, path);
 };
@@ -222,7 +181,7 @@ ImageWrapper.prototype.captureToFile = function (retryNumber, x, y, ex, ey, path
  */
 ImageWrapper.prototype.readImage = function (path) {
     if (imageWrapper == null) {
-        return null;
+        return;
     }
     var uuid = imageWrapper.readImage(path);
     if (uuid != null) {
@@ -242,7 +201,7 @@ ImageWrapper.prototype.readImage = function (path) {
  */
 ImageWrapper.prototype.readBitmap = function (path) {
     if (imageWrapper == null) {
-        return null;
+        return;
     }
     return imageWrapper.readBitmap(path);
 };
@@ -261,7 +220,7 @@ ImageWrapper.prototype.readBitmap = function (path) {
  */
 ImageWrapper.prototype.pixelInImage = function (image1, x, y) {
     if (imageWrapper == null || image1 == null) {
-        return null;
+        return;
     }
     return imageWrapper.pixelInImage(image1.uuid, x, y);
 };
@@ -288,7 +247,7 @@ ImageWrapper.prototype.pixelInImage = function (image1, x, y) {
  */
 ImageWrapper.prototype.findImage = function (image1, template, x, y, ex, ey, weakThreshold, threshold, limit, method) {
     if (imageWrapper == null || image1 == null || template == null) {
-        return null;
+        return;
     }
     var res = imageWrapper.findImage(image1.uuid, template.uuid, x, y, ex - x, ey - y, weakThreshold, threshold, limit, method);
     return this.toRectList(res);
@@ -313,7 +272,7 @@ ImageWrapper.prototype.findImage = function (image1, template, x, y, ex, ey, wea
  */
 ImageWrapper.prototype.findImageEx = function (template, x, y, ex, ey, weakThreshold, threshold, limit, method) {
     if (imageWrapper == null || template == null) {
-        return null;
+        return;
     }
     var res = imageWrapper.findImageCurrentScreen(template.uuid, x, y, ex - x, ey - y, weakThreshold, threshold, limit, method);
     return this.toRectList(res);
@@ -340,7 +299,7 @@ ImageWrapper.prototype.findImageEx = function (template, x, y, ex, ey, weakThres
  */
 ImageWrapper.prototype.matchTemplate = function (image1, template, weakThreshold, threshold, rect, maxLevel, limit, method) {
     if (imageWrapper == null || image1 == null || template == null) {
-        return null;
+        return;
     }
     var drect = rect == null ? null : rect.toJSONString();
     var res = imageWrapper.matchTemplate(image1.uuid, template.uuid, weakThreshold, threshold, drect, maxLevel, limit, method);
@@ -375,7 +334,7 @@ ImageWrapper.prototype.matchTemplate = function (image1, template, weakThreshold
  */
 ImageWrapper.prototype.matchTemplateEx = function (template, weakThreshold, threshold, rect, maxLevel, limit, method) {
     if (imageWrapper == null || template == null) {
-        return null;
+        return;
     }
     var drect = rect == null ? null : rect.toJSONString();
     var res = imageWrapper.matchTemplateCurrentScreen(template.uuid, weakThreshold, threshold, drect, maxLevel, limit, method);
@@ -407,11 +366,11 @@ ImageWrapper.prototype.matchTemplateEx = function (template, weakThreshold, thre
  * @param ey 终点Y坐标
  * @param limit 限制个数
  * @param orz 方向，分别从1-8
- * @return 多个 PointIndex 坐标点数组或者null
+ * @return 多个Point 坐标点数组或者null
  */
 ImageWrapper.prototype.findColor = function (image1, color, threshold, x, y, ex, ey, limit, orz) {
     if (imageWrapper == null || image1 == null) {
-        return null;
+        return;
     }
 
     color = this.convertFirstColorArrayToString2(color);
@@ -423,11 +382,10 @@ ImageWrapper.prototype.findColor = function (image1, color, threshold, x, y, ex,
     let d = JSON.parse(res);
     let x1 = [];
     for (let i = 0; i < d.length; i++) {
-        x1.push(new PointIndex(d[i]));
+        x1.push(new Point(d[i]));
     }
     return x1;
 };
-
 
 /**
  * 在图片中找到颜色和color完全相等的点，参数从JSON中获取如果没有找到，则返回null。
@@ -438,11 +396,11 @@ ImageWrapper.prototype.findColor = function (image1, color, threshold, x, y, ex,
  *
  * @param image 图片
  * @param jsonFileName     res文件中取色工具生成的JSON文件，只要填写文件名称即可，后缀不用填写
- * @return 多个 PointIndex 坐标点数组或者null
+ * @return 多个Point 坐标点数组或者null
  */
 ImageWrapper.prototype.findColorJ = function (image1, jsonFileName) {
     if (imageWrapper == null || image1 == null) {
-        return null;
+        return;
     }
     var data = readResString(jsonFileName + ".json");
     if (data == null || data == "") {
@@ -457,7 +415,8 @@ ImageWrapper.prototype.findColorJ = function (image1, jsonFileName) {
     var ey = data['ey'];
     var limit = data['limit'];
     var orz = data['orz']
-    return this.findColor(image1.uuid, firstColor, threshold, x, y, ex - x, ey - y, limit, orz);
+
+    return imageWrapper.findColor(image1.uuid, firstColor, threshold, x, y, ex - x, ey - y, limit, orz);
 };
 
 /**
@@ -475,11 +434,11 @@ ImageWrapper.prototype.findColorJ = function (image1, jsonFileName) {
  * @param ey 终点Y坐标
  * @param limit 限制个数
  * @param orz 方向，分别从1-8
- * @return 多个 PointIndex 坐标点数组或者null
+ * @return 多个Point 坐标点数组或者null
  */
 ImageWrapper.prototype.findColorEx = function (color, threshold, x, y, ex, ey, limit, orz) {
     if (imageWrapper == null) {
-        return null;
+        return;
     }
     color = this.convertFirstColorArrayToString2(color);
     let res = imageWrapper.findColorCurrentScreen(color, threshold, x, y, ex - x, ey - y, limit, orz);
@@ -489,7 +448,7 @@ ImageWrapper.prototype.findColorEx = function (color, threshold, x, y, ex, ey, l
     let d = JSON.parse(res);
     let x1 = [];
     for (var i = 0; i < d.length; i++) {
-        x1.push(new PointIndex(d[i]));
+        x1.push(new Point(d[i]));
     }
     return x1;
 };
@@ -503,11 +462,11 @@ ImageWrapper.prototype.findColorEx = function (color, threshold, x, y, ex, ey, l
  * 兼容版本: Android 5.0 以上
  *
  * @param jsonFileName     res文件中取色工具生成的JSON文件，只要填写文件名称即可，后缀不用填写
- * @return 多个 PointIndex 坐标点数组或者null
+ * @return 多个Point 坐标点数组或者null
  */
 ImageWrapper.prototype.findColorExJ = function (jsonFileName) {
     if (imageWrapper == null) {
-        return null;
+        return;
     }
     var data = readResString(jsonFileName + ".json");
     if (data == null || data == "") {
@@ -522,7 +481,7 @@ ImageWrapper.prototype.findColorExJ = function (jsonFileName) {
     var ey = data['ey'];
     var limit = data['limit'];
     var orz = data['orz']
-    return this.findColorCurrentScreen(firstColor, threshold, x, y, ex - x, ey - y, limit, orz);
+    return imageWrapper.findColorCurrentScreen(firstColor, threshold, x, y, ex - x, ey - y, limit, orz);
 };
 
 
@@ -549,7 +508,7 @@ ImageWrapper.prototype.findColorExJ = function (jsonFileName) {
  */
 ImageWrapper.prototype.findMultiColor = function (image1, firstColor, points, threshold, x, y, ex, ey, limit, orz) {
     if (imageWrapper == null || image1 == null) {
-        return null;
+        return;
     }
     firstColor = this.convertFirstColorArrayToString(firstColor);
     points = this.convertMultiColorArrayToString(points);
@@ -582,7 +541,7 @@ ImageWrapper.prototype.findMultiColor = function (image1, firstColor, points, th
 ImageWrapper.prototype.findMultiColorJ = function (image1, jsonFileName) {
     //String image, String firstColor, String points, float threshold, int x, int y, int w, int h,int limit
     if (imageWrapper == null || image1 == null) {
-        return null;
+        return;
     }
     var data = readResString(jsonFileName + ".json");
     if (data == null || data == "") {
@@ -625,7 +584,7 @@ ImageWrapper.prototype.findMultiColorJ = function (image1, jsonFileName) {
 ImageWrapper.prototype.findMultiColorEx = function (firstColor, points, threshold, x, y, ex, ey, limit, orz) {
     //String firstColor, String points, float threshold, int x, int y, int w, int h
     if (imageWrapper == null) {
-        return null;
+        return;
     }
     firstColor = this.convertFirstColorArrayToString(firstColor);
     points = this.convertMultiColorArrayToString(points);
@@ -660,7 +619,7 @@ ImageWrapper.prototype.findMultiColorEx = function (firstColor, points, threshol
  */
 ImageWrapper.prototype.findMultiColorExJ = function (jsonFileName) {
     if (imageWrapper == null) {
-        return null;
+        return;
     }
     var data = readResString(jsonFileName + ".json");
     if (data == null || data == "") {
@@ -696,7 +655,7 @@ ImageWrapper.prototype.findMultiColorExJ = function (jsonFileName) {
  */
 ImageWrapper.prototype.cmpColor = function (image1, points, threshold, x, y, ex, ey) {
     if (imageWrapper == null || image1 == null) {
-        return false;
+        return -1;
     }
     points = this.convertMultiColorArrayToString(points);
     let index = imageWrapper.cmpColor(image1.uuid, points, threshold, x, y, ex - x, ey - y);
@@ -722,7 +681,7 @@ ImageWrapper.prototype.cmpColor = function (image1, points, threshold, x, y, ex,
  */
 ImageWrapper.prototype.cmpColorEx = function (points, threshold, x, y, ex, ey) {
     if (imageWrapper == null) {
-        return false;
+        return -1;
     }
     points = this.convertMultiColorArrayToString(points);
     let index = imageWrapper.cmpColorCurrentScreen(points, threshold, x, y, ex - x, ey - y);
@@ -926,7 +885,7 @@ ImageWrapper.prototype.argb = function (color) {
  */
 ImageWrapper.prototype.getPixelBitmap = function (bitmap, x, y) {
     if (imageWrapper == null) {
-        return 0;
+        return;
     }
     return imageWrapper.getPixelBitmap(bitmap, x, y);
 };
@@ -946,7 +905,7 @@ ImageWrapper.prototype.getPixelBitmap = function (bitmap, x, y) {
  */
 ImageWrapper.prototype.getPixelsBitmap = function (bitmap, arraySize, offset, stride, x, y, width, height) {
     if (imageWrapper == null) {
-        return null;
+        return;
     }
     return imageWrapper.getPixelsBitmap(bitmap, arraySize, offset, stride, x, y, width, height);
 };
@@ -1197,16 +1156,11 @@ var ocr = new OCRWrapper();
  * @param map map参数表
  * key分别为：
  * type : OCR类型，值分别为 tess = Tesseract模块，baiduOnline=百度在在线识别模块，paddleocr=百度离线的paddleocr，easyedge=百度AI OCR
- * ocrLite = ocrLite
  * 如果类型是 tess,请将训练的模型放到 /sdcard/tessdata/ 文件夹下,参数设置为 : {"type":"tess","language":"chi_sim","debug":false}<Br/>
  * language: 语言数据集文件， 例如chi_sim.traineddata 代表是中文简体语言，参数就填写chi_sim
  * debug: 代码是否设置调试模式，一般设置false即可
  * 如果类型是 baiduOnline, 参数设置为 : {"type":"baiduOnline","ak":"xxx","sk":"xx"}<Br/>
- * ak = api key,sk = secret key, 百度OCR文档地址 : https://ai.baidu.com/ai-doc/OCR/Ck3h7y2ia<Br/>
- * 如果类型是 ocrLite, 参数设置为 : {"type":"ocrLite","numThread":4,"padding":10,"maxSideLen":0}<Br/>
- * numThread: 线程数量。 <br/>
- * padding: 图像预处理，在图片外周添加白边，用于提升识别率，文字框没有正确框住所有文字时，增加此值。<br/>
- * maxSideLen: 按图片最长边的长度，此值为0代表不缩放，例：1024，如果图片长边大于1024则把图像整体缩小到1024再进行图像分割计算，如果图片长边小于1024则不缩放，如果图片长边小于32，则缩放到32。<br/>
+ * ak = api key,sk = secret key, 百度OCR文档地址 : https://ai.baidu.com/ai-doc/OCR/Ck3h7y2ia
  * @return {bool} 布尔型 成功或者失败
  */
 OCRWrapper.prototype.initOcr = function (map) {
@@ -1308,24 +1262,6 @@ OCRWrapper.prototype.ocrBitmap = function (bitmap, timeout, extra) {
     return d;
 };
 
-OCRWrapper.prototype.ocrImage = function (img, timeout, extra) {
-    if (img == null) {
-        return null;
-    }
-    let bitmap = image.imageToBitmap(img)
-    if (bitmap == null) {
-        return null
-    }
-    let d = ocrWrapper.ocrBitmap(bitmap, timeout, JSON.stringify(extra));
-    if (bitmap != null) {
-        bitmap.recycle();
-        bitmap = null;
-    }
-    if (d != null && d != "") {
-        return JSON.parse(d);
-    }
-    return d;
-};
 
 ImageWrapper.prototype.convertFirstColorArrayToString = function (arr) {
     if (arr) {
@@ -1416,37 +1352,3 @@ ImageWrapper.prototype.convertMultiCmpColorArrayToString = function (arr) {
     }
     return null;
 }
-
-/**
- * 通过颜色找图，支持透明图，这个不需要处理话opencv
- * <p>
- * 整张图片都找不到时返回null
- * <Br/>
- * 运行环境: 无限制
- * <Br/>
- * 兼容版本: Android 5.0 以上
- * @param image1     大图片
- * @param template  小图片（模板）
- * @param x         找图区域 x 起始坐标
- * @param y         找图区域 y 起始坐标
- * @param ex 终点X坐标
- * @param ey 终点Y坐标
- * @param threshold 图片相似度。取值范围为0~1的浮点数。默认值为0.9。
- * @param limit 限制结果的数量，如果要找到1个，就填写1，如果是多个请填写多个
- * @return 多个Point 坐标点数组或者null
- */
-ImageWrapper.prototype.findImageByColor = function (image1, template, x, y, ex, ey, threshold, limit) {
-    if (imageWrapper == null || image1 == null || template == null) {
-        return null;
-    }
-    let res = imageWrapper.findImageByColor(image1.uuid, template.uuid, x, y, ex - x, ey - y, threshold, limit);
-    if (res == null || res == "") {
-        return null;
-    }
-    let d = JSON.parse(res);
-    let x1 = [];
-    for (let i = 0; i < d.length; i++) {
-        x1.push(new Point(d[i]));
-    }
-    return x1;
-};

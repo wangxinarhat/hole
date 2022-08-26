@@ -12,12 +12,12 @@ Console.prototype.log = function (msg) {
     ecImporter.logd(formatlog(msg), s);
 }
 
-Console.prototype.logLine = function (line, msg) {
+Console.prototype.logLine = function (line,msg) {
     var s = [];
     for (var i = 2; i < arguments.length; i++) {
         s.push(arguments[i]);
     }
-    ecImporter.logdLine(line, formatlog(msg), s);
+    ecImporter.logdLine(line,formatlog(msg), s);
 }
 
 /**
@@ -150,13 +150,16 @@ function logd(msg) {
 }
 
 
-function logdLine(line, msg) {
+
+function logdLine(line,msg) {
     var s = [];
     for (var i = 2; i < arguments.length; i++) {
         s.push(arguments[i]);
     }
-    ecImporter.logdLine(line, formatlog(msg), s);
+    ecImporter.logdLine(line,formatlog(msg), s);
 }
+
+
 
 
 /**
@@ -172,13 +175,14 @@ function logi(msg) {
 }
 
 
-function logiLine(line, msg) {
+function logiLine(line,msg) {
     var s = [];
     for (var i = 2; i < arguments.length; i++) {
         s.push(arguments[i]);
     }
-    ecImporter.logiLine(line, formatlog(msg), s);
+    ecImporter.logiLine(line,formatlog(msg), s);
 }
+
 
 
 /**
@@ -194,12 +198,13 @@ function loge(msg) {
 }
 
 
-function logeLine(line, msg) {
+
+function logeLine(line,msg) {
     var s = [];
     for (var i = 2; i < arguments.length; i++) {
         s.push(arguments[i]);
     }
-    ecImporter.logeLine(line, formatlog(msg), s);
+    ecImporter.logeLine(line,formatlog(msg), s);
 }
 
 /**
@@ -215,13 +220,14 @@ function logw(msg) {
 }
 
 
-function logwLine(line, msg) {
+function logwLine(line,msg) {
     var s = [];
     for (var i = 2; i < arguments.length; i++) {
         s.push(arguments[i]);
     }
-    ecImporter.logwLine(line, formatlog(msg), s);
+    ecImporter.logwLine(line,formatlog(msg), s);
 }
+
 
 
 /**
@@ -231,14 +237,13 @@ function logwLine(line, msg) {
  * @param size 每个文件分隔的尺寸
  * @return 保存日志文件的目录
  */
-function setSaveLogEx(save, path, size, fileName) {
-    return ecImporter.setSaveLog(save, path, fileName, size);
+function setSaveLogEx(save, path, size,fileName) {
+    return ecImporter.setSaveLog(save, path,fileName, size);
 }
 
 function setSaveLog(save, path, size) {
-    return ecImporter.setSaveLog(save, path, null, size);
+    return ecImporter.setSaveLog(save, path,null, size);
 }
-
 /**
  * 打印日志的时候，悬浮窗是否展示行号，正式发布，可以不展示行号，不影响调试和保存在文件的日志
  * @param ds  true 代表显示， false 不显示
@@ -353,7 +358,7 @@ function exit() {
  * 判断EC运行的当前线程是否处于退出状态，可用判断脚本是否退出，或者子线程是否退出
  * @return true 已退出
  */
-function isScriptExit() {
+function isScriptExit(){
     return java.lang.Thread.currentThread().getName().contains("-interrupt")
 }
 
@@ -388,30 +393,6 @@ function saveResToFile(fileName, path) {
 function readResString(fileName) {
     return javaString2string(ecImporter.readResString(fileName));
 }
-
-/**
- * 查找IEC的文件
- * 适合版本 EC 8.0.0+
- * @param dir       文件夹名称，null代表只读res/文件夹，没有默认是res文件夹，可以是类似 res/aaa/这样的文件夹
- * @param names     文件名称前缀,null代表不匹配， 例如aaa,多个前缀用|分割，例如 aaa|bb|cc
- * @param ext       文件扩展名 ,null代表不匹配，例如.png,多个扩展用|分割，例如 .png|.jpg|.bmp
- * @param recursion 是否递归子目录，true代表递归
- * @return {array} 文件名称JSON数组
- */
-function findIECFile(dir, names, ext, recursion) {
-    let s = ecImporter.findIECFile(dir, names, ext, recursion);
-    if (s == null) {
-        return null;
-    }
-    s = javaString2string(s);
-    try {
-        return JSON.parse(s);
-    } catch (e) {
-        return null;
-    }
-    return null;
-}
-
 
 /**
  * 读取IEC文件中的资源文件，并返回字符串
@@ -459,6 +440,8 @@ function startEnv() {
 function daemonEnv(daemon) {
     return ecImporter.setDaemonAutoService(daemon);
 }
+
+
 
 
 /**
@@ -573,13 +556,15 @@ function time() {
  * @timeout 申请超时时间 单位是毫秒
  * @return {bool} true 代表有权限  false代表无权限或申请失败
  */
-function requestRuntimePermission(permissionArray, timeout) {
-    if (permissionArray == null || permissionArray == undefined) {
+function requestRuntimePermission(permissionArray,timeout) {
+    if(permissionArray==null||permissionArray==undefined){
         return false;
     }
-    let d = JSON.stringify(permissionArray)
-    return ecImporter.requestRuntimePermission(d, timeout);
+    let d=JSON.stringify(permissionArray)
+    return ecImporter.requestRuntimePermission(d,timeout);
 }
+
+
 
 
 /**
