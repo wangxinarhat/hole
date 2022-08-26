@@ -7,6 +7,8 @@ function FileWrapper() {
 }
 
 var file = new FileWrapper();
+
+
 /**
  *
  * 读取文件中的所有内容

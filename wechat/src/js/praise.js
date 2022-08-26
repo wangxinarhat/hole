@@ -42,7 +42,7 @@ function timeline(praiseCount) {
     let startTimestamp = Date.parse(new Date());
     let count = 0;
     while (count < praiseCount && (Date.parse(new Date()) - startTimestamp) < 3 * 60 * 60 * 1000) {
-        logd("timeline : 进入点赞流程 ～");
+        logd("timeline : 点赞进度 = " + count + "/" + praiseCount);
         let points = image.findImageEx(popIcon, 0, 0, 0, 0, 0.7, 0.9, 10, 5);
         if (points) {
             logd("timeline : pop points length = " + points.length);
@@ -55,7 +55,6 @@ function timeline(praiseCount) {
             let popClickRet = clickPoint((points[0].left + points[0].right) / 2, (points[0].top + points[0].bottom) / 2);
             logd("timeline : popClickRet = " + popClickRet);
             sleep(1000);
-
             let praiseSelector = text("赞").id("com.tencent.mm:id/n4").clz("android.widget.TextView").desc("赞");
             let praiseNode = praiseSelector.getOneNodeInfo(1000);
             if (praiseNode) {
@@ -70,38 +69,6 @@ function timeline(praiseCount) {
             }
 
         }
-
-        /**
-         let tmpImage;
-         for (let i = 0; i < 3; i++) {
-                tmpImage = image.captureFullScreen()
-                sleep(1000);
-                if (tmpImage) {
-                    break;
-                }
-            }
-         if (tmpImage == null) {
-                logw("timeline : 尝试3次，截图失败，滑动 1/8 屏幕，跳过 ！！！ ");
-                swipeAndSleep(SCREEN_HEIGHT / 8);
-            } else {
-                let firstColor = "#4C4C4C-#101010";
-                let multiColor = "35|8|#4C4C4C-#101010,42|-40|#4C4C4C-#101010,81|-30|#FDFDFD-#101010,32|-8|#4C4C4C-#101010,71|-29|#999999-#101010,16|-3|#FFFFFF-#101010,-5|-29|#4C4C4C-#101010,46|12|#4C4C4C-#101010,51|-34|#4C4C4C-#101010,68|-21|#4C4C4C-#101010,9|-14|#4C4C4C-#101010,13|-28|#4C4C4C-#101010,22|-29|#4C4C4C-#101010,60|7|#4C4C4C-#101010,67|5|#4C4C4C-#101010,-19|-1|#4C4C4C-#101010,-10|-22|#FFFFFF-#101010,1|8|#4C4C4C-#101010,75|-41|#4C4C4C-#101010,41|1|#4C4C4C-#101010,-13|-31|#4C4C4C-#101010,20|-11|#4C4C4C-#101010,0|7|#4C4C4C-#101010,42|-27|#4C4C4C-#101010,8|11|#4C4C4C-#101010,41|-40|#4C4C4C-#101010,-18|-16|#4C4C4C-#101010,66|8|#4C4C4C-#101010,19|6|#4C4C4C-#101010";
-                let points = image.findMultiColorEx(firstColor, multiColor, 0.9, 0, 0, 0, 0, 1, 1);
-                if (points && points.length > 0) {
-                    logd("timeline : points " + JSON.stringify(points));
-                    clickPoint(points[0].x, points[0].y);
-                    count++;
-                    logd("timeline : 点赞成功，进度 ： " + count + " / " + praiseCount);
-                    sleep(2000);
-                    swipeAndSleep(SCREEN_HEIGHT / 4);
-                } else {
-                    logw("timeline : 找色失败，滑动 1/8 屏幕");
-                    swipeAndSleep(SCREEN_HEIGHT / 8);
-                }
-                //图片要回收
-                image.recycle(tmpImage);
-            }
-         **/
     }
     image.recycle(popIcon)
     sleep(2000);
