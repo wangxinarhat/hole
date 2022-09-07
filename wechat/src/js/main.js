@@ -12,7 +12,16 @@ function main() {
     logd("main : messageContent = " + messageContent + " ; type = " + typeof messageContent);
     logd("main : praiseCount = " + praiseCount + " ; type = " + typeof praiseCount);
 
+    image.setInitParam(
+        {
+            "action_timeout": 2000,
+            "auto_click_request_dialog": false
+        }
+    );
+
     //校验数据
+    // isPraise = true;
+    // praiseCount = 188;
     if (isPraise) {
         if (praiseCount < 88 || praiseCount > 1888) {
             toast("点赞数量应该 88～1888");
@@ -27,17 +36,17 @@ function main() {
 
     //启动服务，启动app
     if (!commonUtils.autoServiceStart(3)) {
-        logd("main : 自动化服务启动失败，无法执行脚本")
-        // exit();
+        loge("main : 自动化服务启动失败，无法执行脚本")
+        exit();
         return;
     }
 
     if (!image.initOpenCV()) {
-        toast("初始化openCV失败,停止脚本!")
-        loge("初始化openCV失败,停止脚本!")
+        toast("main : 初始化openCV失败,停止脚本!")
+        loge("main : 初始化openCV失败,停止脚本!")
         exit()
     }
-    image.releaseScreenCapture();
+    // image.releaseScreenCapture();
     sleep(2000);
 
     let startRet = utils.openAppByName("微信");

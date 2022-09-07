@@ -38,12 +38,15 @@ function timeline(praiseCount) {
         return
     }
     sleep(1000);
-    let popIcon = readResAutoImage("pop.png");
+    let popIcon = readResAutoImage("pop2.png");
+    logd("timeline : popIcon = " + popIcon);
     let startTimestamp = Date.parse(new Date());
     let count = 0;
     while (count < praiseCount && (Date.parse(new Date()) - startTimestamp) < 3 * 60 * 60 * 1000) {
         logd("timeline : 点赞进度 = " + count + "/" + praiseCount);
-        let points = image.findImageEx(popIcon, 0, 0, 0, 0, 0.7, 0.9, 10, 5);
+        //从工程目录下res文件夹下读取sms.png文件
+        let points = image.findImageEx(popIcon, 0, 0, 0, 0, 0.7, 0.8, 6, 5);
+        logd("timeline : points = " + points);
         if (points) {
             logd("timeline : pop points length = " + points.length);
             logd("timeline : pop points = " + JSON.stringify(points));
